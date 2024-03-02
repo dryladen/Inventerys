@@ -4,18 +4,27 @@ import * as React from "react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { Icons } from "./icons";
-import { signIn, signOut } from "next-auth/react"
-
+import { signIn, signOut } from "next-auth/react";
+import { Navigation } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  
+  const router = useRouter();
+  const loginWithGoogle = async () => {
+    setIsLoading(true);
+    const response = await signIn("google",{callbackUrl: '/admin',redirect: false});
+    console.log(response);
+    if (response?.ok) {
+      router.push("/admin");
+    }
+  };
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <Button disabled={isLoading} onClick={()=> signIn("google")}>
-      {isLoading ? (
+      <Button disabled={isLoading} onClick={loginWithGoogle}>
+        {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.google className="mr-2 h-4 w-4" />
@@ -32,7 +41,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" disabled={isLoading} onClick={()=> signIn("discord")}>
+      <Button
+        variant="outline"
+        type="button"
+        disabled={isLoading}
+        onClick={() => signIn("discord")}
+      >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
@@ -40,12 +54,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         )}{" "}
         Github
       </Button>
-      <Button variant="outline" type="button" disabled={isLoading} onClick={() => signOut()} >
-      {isLoading ? (
+      <Button
+        variant="outline"
+        type="button"
+        disabled={isLoading}
+        onClick={() => signOut()}
+      >
+        {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           ""
-        )}{"Sign Out"}
+        )}
+        {"Sign Out"}
       </Button>
     </div>
   );
