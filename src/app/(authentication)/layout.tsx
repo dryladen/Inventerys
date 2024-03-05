@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Inventerys",
+  title: "Login",
   description: "Sistem Informasi Inventaris",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
@@ -21,9 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable} h-screen max-h-screen`}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+    <html>
+      <body>
+        <TRPCReactProvider>
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );

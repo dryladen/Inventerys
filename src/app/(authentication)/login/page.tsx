@@ -1,19 +1,15 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
-
 import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import { UserAuthForm } from "./_components/auth-form";
-import { signIn, signOut } from "next-auth/react";
-import { Button } from "~/components/ui/button";
+import { UserAuthForm } from "../../_components/auth-form";
 export default async function Home() {
   noStore();
   const hello = await api.post.hello.query({ text: "from tRPC" });
   const session = await getServerAuthSession();
   return (
     <>
-      
       <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-3 lg:px-0">
         <div className="bg-muted relative hidden h-full flex-col text-white dark:border-r lg:col-span-2 lg:flex">
           <div className="flex h-screen items-center justify-center bg-teal-500 text-6xl font-medium">

@@ -1,16 +1,11 @@
 import {
-  FileInput,
-  FileOutput,
-  LayoutDashboard,
   LayoutList,
   LogIn,
   LogOut,
-  Settings,
-  StretchHorizontal,
   Warehouse,
   Wrench,
 } from "lucide-react";
-import { DashSummary } from "./components/dash-summary";
+import { DashSummary } from "../components/dash-summary";
 export default function Dashboard() {
   return (
     <>

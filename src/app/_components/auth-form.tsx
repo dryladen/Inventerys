@@ -15,10 +15,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter();
   const loginWithGoogle = async () => {
     setIsLoading(true);
-    const response = await signIn("google",{callbackUrl: '/admin',redirect: false});
+    const response = await signIn("google",{callbackUrl: '/dashboard',redirect: false});
     console.log(response);
     if (response?.ok) {
-      router.push("/admin");
+      router.push("/dashboard");
     }
   };
   return (

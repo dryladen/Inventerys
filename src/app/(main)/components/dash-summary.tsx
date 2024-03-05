@@ -11,7 +11,7 @@ interface DashSummaryProps {
 
 export function DashSummary({ summary }: DashSummaryProps) {
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-3 lg:gap-5">
       {summary.map((data, index) => (
         <div
           key={index}
