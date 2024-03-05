@@ -15,11 +15,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter();
   const loginWithGoogle = async () => {
     setIsLoading(true);
-    const response = await signIn("google",{callbackUrl: '/dashboard',redirect: false});
-    console.log(response);
-    if (response?.ok) {
-      router.push("/dashboard");
-    }
+    const response = await signIn("google",{callbackUrl: '/',redirect: false});
   };
   return (
     <div className={cn("grid gap-6", className)} {...props}>

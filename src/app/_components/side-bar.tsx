@@ -2,14 +2,11 @@
 import { cn } from "~/lib/utils";
 import { Nav } from "./nav";
 import {
-  Archive,
   ArrowRightLeft,
-  FilePenLineIcon,
   LayoutDashboard,
   List,
   ListChecks,
   ScanBarcode,
-  Trash2,
   Users,
   Warehouse,
 } from "lucide-react";
@@ -28,13 +25,13 @@ export function Sidebar({ className }: SidebarProps) {
                   title: "Dashboard",
                   icon: LayoutDashboard,
                   variant: "select",
-                  url: "/dashboard"
+                  url: "/"
                 },
                 {
-                  title: "Transaction",
-                  icon: ArrowRightLeft,
+                  title: "Warehouse",
+                  icon: Warehouse,
                   variant: "ghost",
-                  url: "/transact"
+                  url: "/warehouse"
                 },
                 {
                   title: "Product List",
@@ -48,6 +45,23 @@ export function Sidebar({ className }: SidebarProps) {
                   variant: "ghost",
                   url: "/inventory"
                 },
+                {
+                  title: "Master Data",
+                  icon: ListChecks,
+                  variant: "ghost",
+                  url: "/inventory",
+                  sublinks: [
+                    {
+                      title: "Product",
+                      url: "/product"
+                    },
+                    {
+                      title: "Inventory",
+                      url: "/inventory"
+                    }
+                  ]
+                },
+
                 {
                   title: "Stock Opname",
                   icon: ScanBarcode,

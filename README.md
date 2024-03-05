@@ -56,3 +56,30 @@ Inventory App create using T3 Stack
   - id_warehouse : number (Identifier for the warehouse where the user is assigned)
   - createdAt : Date (Date when the user was created)
   - updatedAt : Date (Date when the user was last updated)
+
+### Route
+- Dashboard
+- Warehouse
+  - Warehouse
+    - Show warehouse location
+      - check in
+      - check out
+      - stock opname
+    - Add new warehouse
+      - Name
+      - Select Staff
+      - Select Location
+  - Service center
+    - Show service location
+      - Change service status
+    - Add new service
+- Master Data
+  - Model
+  - Product
+    - Create Product
+      - masukan data product
+      - pilih model
+      - pilih warehouse
+    - Update Product
+    - Delete Product
+  - 
