@@ -24,6 +24,7 @@ model Post {
     createdById String
 
     @@index([name])
+
 }
 
 // Necessary for Next auth
@@ -56,9 +57,9 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     password      String?
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt  
-    name          String?   
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+    name          String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
@@ -67,6 +68,8 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    products      Product[]
+    warehouses    Warehouse[]
 }
 
 model VerificationToken {
@@ -75,4 +78,27 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Product {
+    id           Int      @id @default(autoincrement())
+    id_warehouse Int
+    id_model     Int
+    name         String
+    status       String
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    createdBy    User     @relation(fields: [createdById], references: [id])
+    createdById  String
+    @@index([name])
+}
+
+model Warehouse {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    createdBy User     @relation(fields: [createdById], references: [id])
+    createdById String
+    @@index([name])
 }

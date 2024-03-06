@@ -26,24 +26,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <TRPCReactProvider>
-      <Providers>
-        <div className="min-h-screen">
-          <div className="flex h-16 items-center px-4">
-            <h1 className="pl-3 text-4xl font-bold text-teal-500">Inventerys</h1>
-            <div className="ml-auto flex items-center space-x-4">
-              <Search />
-              <UserNav />
+    <html>
+      <body>
+        <TRPCReactProvider>
+          <Providers>
+            <div className="min-h-screen">
+              <div className="flex h-16 items-center px-4">
+                <h1 className="pl-3 text-4xl font-bold text-teal-500">
+                  Inventerys
+                </h1>
+                <div className="ml-auto flex items-center space-x-4">
+                  <Search />
+                  <UserNav />
+                </div>
+              </div>
+              <div className="grid h-full lg:grid-cols-6">
+                <Sidebar className="h-full min-w-56" />
+                <div className="col-span-3 min-h-screen rounded-tl-3xl bg-slate-200 p-5 lg:col-span-5">
+                  {children}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="grid h-full lg:grid-cols-6">
-            <Sidebar className="h-full min-w-56" />
-            <div className="min-h-screen col-span-3 rounded-tl-3xl bg-slate-200 p-5 lg:col-span-5">
-              {children}
-            </div>
-          </div>
-        </div>
-      </Providers>
-    </TRPCReactProvider>
+          </Providers>
+        </TRPCReactProvider>
+      </body>
+    </html>
   );
 }

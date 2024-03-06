@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ListChecks, SlidersHorizontal } from "lucide-react";
+import { Link, ListChecks, SlidersHorizontal } from "lucide-react";
 import React from "react";
 import { Button } from "~/components/ui/button";
 import {

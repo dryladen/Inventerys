@@ -38,10 +38,17 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/login",
+    // ...other pages
+  },
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session, token }) => ({
       ...session,
-      user: { ...session.user, id: user.id },
+      user: { ...session.user, id: token.sub },
     }),
   },
   adapter: PrismaAdapter(db) as Adapter,

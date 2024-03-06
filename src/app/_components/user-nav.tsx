@@ -42,7 +42,7 @@ export function UserNav() {
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={()=> signOut({callbackUrl: "/"})}>Sign Out</DropdownMenuItem>
+        <DropdownMenuItem onClick={()=> signOut({callbackUrl: "/login"})}>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

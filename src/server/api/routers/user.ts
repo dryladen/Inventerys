@@ -5,33 +5,26 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+const createUserInput = z.object({
+  name: z.string(),
+  email: z.string().email(),
+});
 
 export const userRouter = createTRPCRouter({
   all: publicProcedure.query( async ({ctx}) => {
     return await ctx.db.user.findMany({take:10})
   }),
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      return ctx.db.post.create({
+    .input(createUserInput)
+    .mutation(({ ctx, input }) => {
+      return ctx.db.user.create({
         data: {
           name: input.name,
-          createdBy: { connect: { id: ctx.session.user.id } },
+          email: input.email,
+          image: "/box.jpg",
         },
       });
     }),
-
   getLatest: protectedProcedure.query(({ ctx }) => {
     return ctx.db.post.findFirst({
       orderBy: { createdAt: "desc" },
