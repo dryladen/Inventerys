@@ -1,7 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, FileText, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  Copy,
+  FileText,
+  MoreHorizontal,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +20,22 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "./column-header";
 import Image from "next/image";
+import { FormUser } from "~/app/_components/form-user";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -30,24 +53,11 @@ export type Users = {
 export const columns: ColumnDef<Users>[] = [
   {
     accessorKey: "no",
-    header: ()=><div className="text-center">No</div>,
+    header: () => <div className="text-center">No</div>,
     cell: ({ row }) => {
       return <div className="text-center">{row.index + 1}</div>;
     },
   },
-
-  // {
-  //   accessorKey: "password",
-  //   header: "Password",
-  // },
-  // {
-  //   accessorKey: "createdAt",
-  //   header: "Created At",
-  // },
-  // {
-  //   accessorKey: "updatedAt",
-  //   header: "Updated At",
-  // },
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -77,37 +87,74 @@ export const columns: ColumnDef<Users>[] = [
       <DataTableColumnHeader column={column} title="E-mail" />
     ),
   },
-  // {
-  //   accessorKey: "emailVerified",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Email Verified" />
-  //   ),
-  // },
   {
     id: "detail",
-    header: "Details",
+    header: () => <div className="pl-6">Details</div>,
     cell: ({ row }) => {
       const user = row.original;
-
+      const router = useRouter();
+      const deleteUser = api.user.delete.useMutation({
+        onSuccess: () => {
+          router.refresh();
+          toast.success("User deleted");
+        },
+      });
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <>
+          <div className="flex">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <FileText className="h-4 w-4 " />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Detail</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => navigator.clipboard.writeText(user.id)}
+                >
+                  <Copy className="mr-2 h-4 w-4" />
+                  Copy User ID
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>View User Details</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <FileText className="h-4 w-4" />
+              <FormUser
+                user_id={user.id}
+                icon={<Pencil className="h-4 w-4 cursor-pointer" />}
+              />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Detail</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
-            >
-              Copy User ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View User Details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <Trash2 className="h-4 w-4 cursor-pointer text-red-500" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    the account and remove your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      deleteUser.mutate({ id: user.id });
+                    }}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </>
       );
     },
   },

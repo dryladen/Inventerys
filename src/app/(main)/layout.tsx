@@ -8,6 +8,7 @@ import { Sidebar } from "../_components/side-bar";
 import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body>
         <TRPCReactProvider>
           <Providers>
+            <Toaster position="top-center" expand={false} visibleToasts={1} />
             <div className="min-h-screen">
               <div className="flex h-16 items-center px-4">
                 <h1 className="pl-3 text-4xl font-bold text-teal-500">

@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-table";
 import { Link, ListChecks, SlidersHorizontal } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -34,11 +35,14 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  buttonComponent?: React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  buttonComponent,
+
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -73,6 +77,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
+          onClick={()=>toast.success("User created")}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -102,6 +107,7 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        {buttonComponent}
       </div>
       <div className="rounded-2xl border-2 bg-white">
         <Table>
