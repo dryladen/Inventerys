@@ -17,39 +17,38 @@ import { api } from "~/trpc/react";
 import React from "react";
 import { Toaster, toast } from "sonner";
 interface FormUserProps {
-  user_id?: string;
+  categoryId?: string;
   icon: React.ReactNode;
 }
-export function FormUser({ user_id, icon }: FormUserProps) {
+export function FormCategory({ categoryId, icon }: FormUserProps) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const createUser = api.user.create.useMutation({
+  const createCategory = api.category.create.useMutation({
     onSuccess: () => {
       router.refresh();
       setName("");
       setEmail("");
       setIsOpen(false);
-      toast.success("User created");
-      console.log("User created");
+      toast.success("Category created");
+      console.log("Category created");
     },
   });
-  const getUser = user_id
-    ? api.user.userById.useQuery({ id: user_id }, { enabled: true })
+  const getCategory = categoryId
+    ? api.category.categoryById.useQuery({ id: categoryId }, { enabled: true })
     : null;
   useEffect(() => {
-    if (getUser?.data) {
-      setName(getUser.data.name || "");
-      setEmail(getUser.data.email || "");
+    if (getCategory?.data) {
+      setName(getCategory.data.name || "");
     }
-  }, [getUser?.data]);
-  const updateUser = api.user.update.useMutation({
+  }, [getCategory?.data]);
+  const updateUser = api.category.update.useMutation({
     onSuccess: () => {
       router.refresh();
       setIsOpen(false);
-      console.log("User updated");
-      toast.success("User updated");
+      console.log("Category updated");
+      toast.success("Category updated");
     },
   });
   return (
@@ -59,18 +58,18 @@ export function FormUser({ user_id, icon }: FormUserProps) {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>
-              {!user_id ? "Create new Member" : "Edit Member"}
+              {!categoryId ? "Create new category" : "Edit category"}
             </DialogTitle>
           </DialogHeader>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (user_id) {
-                updateUser.mutate({ userName: name, id: user_id });
-                console.log("Edit user");
+              if (categoryId) {
+                updateUser.mutate({ name: name, id: categoryId });
+                console.log("Edit category");
               } else {
-                createUser.mutate({ name, email });
-                console.log("create user");
+                createCategory.mutate({ name:name });
+                console.log("create category");
               }
             }}
             className="flex flex-col gap-2"
@@ -87,27 +86,15 @@ export function FormUser({ user_id, icon }: FormUserProps) {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="email" className="text-right">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  value={email}
-                  className="col-span-3"
-                  onChange={(e) => setEmail(e.target.value)}
-                  {...(user_id && { disabled: true })}
-                />
-              </div>
             </div>
             <DialogFooter>
               <Button
                 variant="secondary"
                 type="submit"
-                disabled={createUser.isLoading}
+                disabled={createCategory.isLoading}
                 className="rounded-full"
               >
-                {createUser.isLoading ? "Submitting..." : "Submit"}
+                {createCategory.isLoading ? "Submitting..." : "Submit"}
               </Button>
             </DialogFooter>
           </form>

@@ -3,6 +3,9 @@ import { cn } from "~/lib/utils";
 import { Nav } from "./nav";
 import {
   ArrowRightLeft,
+  ChevronRight,
+  Component,
+  Database,
   LayoutDashboard,
   List,
   ListChecks,
@@ -16,7 +19,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function Sidebar({ className }: SidebarProps) {
   return (
     <div className={cn("pb-12", className)}>
-      <div className="space-y-4 p-y-4">
+      <div className="p-y-4 space-y-4">
         <div className="px-2 py-2">
           <div className="space-y-2">
             <Nav
@@ -25,55 +28,46 @@ export function Sidebar({ className }: SidebarProps) {
                   title: "Dashboard",
                   icon: LayoutDashboard,
                   variant: "select",
-                  url: "/"
+                  url: "/dashboard",
                 },
                 {
                   title: "Warehouse",
                   icon: Warehouse,
                   variant: "ghost",
-                  url: "/warehouse"
-                },
-                {
-                  title: "Product List",
-                  icon: List,
-                  variant: "ghost",
-                  url: "/product"
-                },
-                {
-                  title: "Inventory List",
-                  icon: ListChecks,
-                  variant: "ghost",
-                  url: "/inventory"
+                  url: "/warehouse",
                 },
                 {
                   title: "Master Data",
-                  icon: ListChecks,
+                  icon: Database,
                   variant: "ghost",
-                  url: "/inventory",
+                  url: "",
+                  endIcon: ChevronRight,
                   sublinks: [
                     {
                       title: "Product",
-                      url: "/product"
+                      url: "/product",
+                      icon: List,
                     },
                     {
-                      title: "Inventory",
-                      url: "/inventory"
-                    }
-                  ]
+                      title: "Category",
+                      url: "/category",
+                      icon: Component,
+                    },
+                  ],
                 },
 
                 {
                   title: "Stock Opname",
                   icon: ScanBarcode,
                   variant: "ghost",
-                  url: "/opname"
+                  url: "/opname",
                 },
                 {
                   title: "Manage Member",
                   icon: Users,
                   variant: "ghost",
-                  url: "/management"
-                }
+                  url: "/management",
+                },
               ]}
             />
           </div>

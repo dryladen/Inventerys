@@ -24,7 +24,6 @@ model Post {
     createdById String
 
     @@index([name])
-
 }
 
 // Necessary for Next auth
@@ -55,12 +54,12 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String      @id @default(cuid())
     password      String?
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
     name          String?
-    email         String?   @unique
+    email         String?     @unique
     emailVerified DateTime?
     image         String?
     phone         String?
@@ -70,6 +69,7 @@ model User {
     posts         Post[]
     products      Product[]
     warehouses    Warehouse[]
+    categories    Category[]
 }
 
 model VerificationToken {
@@ -81,24 +81,37 @@ model VerificationToken {
 }
 
 model Product {
-    id           Int      @id @default(autoincrement())
-    id_warehouse Int
-    id_model     Int
+    id           String      @id @default(cuid())
+    id_warehouse String
+    id_model     String
     name         String
     status       String
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
     createdBy    User     @relation(fields: [createdById], references: [id])
     createdById  String
+
+    @@index([name])
+}
+
+model Category {
+    id          String  @id @default(cuid())
+    name        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdById String
+
     @@index([name])
 }
 
 model Warehouse {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    createdBy User     @relation(fields: [createdById], references: [id])
+    id          Int      @id @default(autoincrement())
+    name        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdBy   User     @relation(fields: [createdById], references: [id])
     createdById String
+
     @@index([name])
 }

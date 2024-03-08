@@ -15,7 +15,7 @@ import { DataTableColumnHeader } from "./column-header";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type Product = {
   id: string;
   no: number;
   status: "Available" | "Unavailable";
@@ -24,7 +24,7 @@ export type Payment = {
   lastModified: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "no",
     header: "No",

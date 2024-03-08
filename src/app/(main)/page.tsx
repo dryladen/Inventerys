@@ -1,5 +1,5 @@
 import { LayoutList, LogIn, LogOut, Warehouse, Wrench } from "lucide-react";
-import { DashSummary } from "./components/dash-summary";
+import { DashSummary } from "./dashboard/components/dash-summary";
 export default function Dashboard() {
   // show user session
   

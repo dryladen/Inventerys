@@ -1,9 +1,9 @@
 import {
   ChevronRight,
 } from "lucide-react";
-import { Payment, columns } from "./column";
+import { Product, columns } from "./components/column";
 import { DataTable } from "../../_components/data-table";
-async function getData(): Promise<Payment[]> {
+async function getData(): Promise<Product[]> {
   // Fetch data from your API here.
   return [
     {
@@ -39,7 +39,7 @@ export default async function Page() {
   return (
     <>
       <div className="mb-5 flex h-10 w-full items-center space-x-4 rounded-2xl bg-white px-6 font-semibold text-slate-500">
-        <span>Dashboard</span>
+        <span>Master Data</span>
         <ChevronRight size={16} />
         <span className="text-teal-500">Product List</span>
       </div>

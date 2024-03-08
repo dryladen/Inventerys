@@ -20,7 +20,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { DataTableColumnHeader } from "./column-header";
 import Image from "next/image";
-import { FormUser } from "~/app/_components/form-user";
+import { FormUser } from "~/app/(main)/management/components/form-user";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,6 +59,12 @@ export const columns: ColumnDef<Users>[] = [
     },
   },
   {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="E-mail" />
+    ),
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
@@ -81,12 +87,7 @@ export const columns: ColumnDef<Users>[] = [
       );
     },
   },
-  {
-    accessorKey: "email",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="E-mail" />
-    ),
-  },
+
   {
     id: "detail",
     header: () => <div className="pl-6">Details</div>,

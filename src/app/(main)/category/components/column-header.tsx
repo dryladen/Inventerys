@@ -1,5 +1,5 @@
 import { Column } from "@tanstack/react-table"
-import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDown, EyeOff } from "lucide-react"
+import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDown, EyeOff, ListFilter } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
 import { cn } from "~/lib/utils"
@@ -33,7 +33,7 @@ export function DataTableColumnHeader<TData, TValue>({
             ) : column.getIsSorted() === "asc" ? (
               <ArrowUpIcon className="ml-2 h-4 w-4" />
             ) : (
-              <ChevronsUpDown className="ml-2 h-4 w-4" />
+              <ListFilter className="ml-2 h-4 w-4" />
             )}
           </Button>
         </DropdownMenuTrigger>

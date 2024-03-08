@@ -1,9 +1,9 @@
 import { api } from "~/trpc/server";
 import { DataTable } from "../../_components/data-table";
-import { columns } from "./column";
-import { FormUser } from "~/app/_components/form-user";
+import { columns } from "./components/column";
 import { UserPlus } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import { FormUser } from "./components/form-user";
 export default async function Page() {
   const data = await api.user.all.query();
   const formattedData = data.map((user) => ({

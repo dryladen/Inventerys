@@ -77,7 +77,6 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          onClick={()=>toast.success("User created")}
           className="max-w-sm"
         />
         <DropdownMenu>
